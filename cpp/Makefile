@@ -25,7 +25,7 @@ DEPS		:= $(OBJS:.o=.d)
 
 LIB_DIR		:= $(dir $(abspath $(firstword $(MAKEFILE_LIST))))lib
 LIBS		:= SDL2
-LIB_TARGETS	:= SDL2/build/libsdl.a
+LIB_TARGETS	:= SDL2/build/libSDL2.a
 LIB_TARGETS	:= $(addprefix $(LIB_DIR)/,$(LIB_TARGETS))
 LIB_INCS	:= SDL2/include
 INCS		+= $(addprefix $(LIB_DIR)/,$(LIB_INCS))
@@ -35,7 +35,7 @@ INCS		+= $(addprefix $(LIB_DIR)/,$(LIB_INCS))
 # **************************************************************************** #
 
 CXX			:= g++
-CXXFLAGS	:= -Wall -Wextra -Werror
+CXXFLAGS	:= -Wall -Wextra -Werror -O3
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIB_TARGETS)))
 LDLIBS		:= $(addprefix -l,$(LIBS))

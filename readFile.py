@@ -14,7 +14,5 @@ def main():
         sample, timestamp = inlet.pull_sample()
         print(timestamp, sample)
 
-
-
 if __name__ == '__main__':
     main()

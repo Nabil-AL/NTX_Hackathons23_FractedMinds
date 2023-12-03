@@ -13,7 +13,7 @@ def main(argv):
     srate = 100
     name = 'BioSemi'
     type = 'EEG'
-    n_channels = 2
+    n_channels = 1
     help_string = 'SendData.py -s <sampling_rate> -n <stream_name> -t <stream_type>'
     try:
         opts, args = getopt.getopt(argv, "hs:c:n:t:", longopts=["srate=", "channels=", "name=", "type"])

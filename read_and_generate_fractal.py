@@ -6,7 +6,7 @@ from utils import generate_live_fractal
 def main():
     # first resolve an EEG stream on the lab network
     print("looking for an EEG stream...")
-    streams = resolve_stream('name', 'openvibeSignal')
+    streams = resolve_stream('name', 'openvibeSignal')  # read LSL Stream exported from OpenVibe
 
     # create a new inlet to read from the stream
     inlet = StreamInlet(streams[0])

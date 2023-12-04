@@ -1,9 +1,14 @@
+"""
+Read the data sent to the serial port and made available by AnalogReadSerial.ino (to run in Arduino Software).
+In parallel (in another thread) send the data received to an LSL Stream.
+The data received is displayed in a plot updated periodically
+"""
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import threading
 import collections
 from pylsl import StreamInfo, StreamOutlet, local_clock
-from utils import get_substring_between_flags, read_serial_data, update
+from utils import get_substring_between_flags, redirect_serial_data, update
 
 
 # Serial port settings
@@ -15,7 +20,8 @@ DATA_RATE = 1000  # Data read frequency in Hz
 PLOT_UPDATE_RATE = 10  # Plot update frequency in Hz
 MAX_POINTS = 200  # Max number of points to display on the plot
 
-info = StreamInfo("nabilou", "eegt", 1, channel_format='float32')  # LSL Stream
+# Create an LSL Stream
+info = StreamInfo("nabilou", "eegt", 1, channel_format='float32')
 # Next make an outlet
 outlet = StreamOutlet(info)
 
@@ -24,9 +30,9 @@ xmls = outlet.get_info().as_xml()
 port = get_substring_between_flags(xmls, "<v4data_port>", "</v4data_port>")
 print(port)
 
-# Start the serial reading in a separate thread
+# Start the serial port reading in a separate thread and send the value received in the created outlet
 data_queue = collections.deque(maxlen=MAX_POINTS)  # Thread-safe queue for data
-target = read_serial_data(data_queue, outlet, SERIAL_PORT, BAUD_RATE, DATA_RATE)
+target = redirect_serial_data(data_queue, outlet, SERIAL_PORT, BAUD_RATE, DATA_RATE)
 thread = threading.Thread(target=target, daemon=True)
 thread.start()
 

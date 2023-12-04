@@ -20,7 +20,7 @@ def get_substring_between_flags(text, flag1, flag2):
     return text[start + len(flag1):end]
 
 
-def read_serial_data(data_queue, outlet, SERIAL_PORT, BAUD_RATE, DATA_RATE):
+def redirect_serial_data(data_queue, outlet, SERIAL_PORT, BAUD_RATE, DATA_RATE):
     """
     Function to handle data reading from the serial port.
     :param data_queue:
@@ -32,17 +32,17 @@ def read_serial_data(data_queue, outlet, SERIAL_PORT, BAUD_RATE, DATA_RATE):
     """
     with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1) as ser:
         while True:
-            v=b'\x0c'
+            # v = b'\x0c'
             # print(v)
-            a = ser.write(v)
+            # a = ser.write(v)  # Old way was to sent data to the board and make the latter sent every 2 data received
             # print(a)
             data = ser.read(2)
-            value = int.from_bytes(data,byteorder="little", signed=False)
-            # valfloat = (value-500)/1024.  # Scale the 10 bits value sent by Arduino board between -1 and 1
-            outlet.push_sample([value])
+            value = int.from_bytes(data, byteorder="little", signed=False)
+            # valfloat = (value-500)/1024.  # old: Scale the 10 bits value sent by Arduino board between -1 and 1
+            outlet.push_sample([value])  # sent the value received to LSL
 
             # print(data,value)
-            data_queue.append(value)
+            data_queue.append(value)  # stock value
             time.sleep(1.0 / DATA_RATE)
 
 

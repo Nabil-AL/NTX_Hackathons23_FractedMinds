@@ -1,7 +1,7 @@
 # Generate live piece of art with brain waves and using the cheapest EEG recorder (less than 20e)
 
 Project designed and presented during the NeuroTechX Hackathon 2023 week-end.
-This project enabled us to reach the podium among 54 teams participating from all 
+This project enabled us to reach the 2nd place among 54 teams participating from all 
 around the world.
 
 ## Order of files to be run
